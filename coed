@@ -1,0 +1,134 @@
+static ListNode list;
+	static ListNode graveYard;
+	
+	public static void main(String[]args) {
+		list=new ListNode("a");
+		list.next=new ListNode("b");
+		list.next.next=new ListNode("c");
+		list.next.next.next=new ListNode("d");
+		list.next.next.next.next=new ListNode("e");
+		ListNode front=list;
+		ListNode te=list;
+		while(te.next!=null) {
+			te=te.next;
+		}
+		te.next=front;
+		//list.next.next.next.next.next=front;
+	//system debug print//System.out.print(front.data + " " + front.next.data + " " + front.next.next.data + " " + front.next.next.next.data+ " " + front.next.next.next.next.data);
+		ListNode current=list;
+		int count=nodeSize(list);
+		
+		while(count!=1) {
+			Scanner sc=new Scanner(System.in);
+			System.out.print("To see the remaining players enter 'SP', to see the graveyard enter 'GY', to kill enter 'kill'");
+			String an=sc.next();
+			if(an.equalsIgnoreCase("SP")) {
+				print(current);
+			}
+			else if (an.equalsIgnoreCase("GY")) {
+				printGraveYard();
+			}
+			else {
+			System.out.print("Who got killed?:");
+			String var=sc.next();	
+			if(var.equalsIgnoreCase(front.data)) {
+				front=front.next;
+				addGraveYard(var);
+				count--;
+				
+			}
+			else {
+				int size=nodeSize(current);
+				for(int i=0;i<size;i++) {
+					if(current.next.data.equalsIgnoreCase(var)) {
+						addGraveYard(current.next.data);
+						current.next=current.next.next;	
+						
+					}
+					current=current.next;
+				}
+					current=current.next;
+					
+					count--;
+			}
+			
+		}
+		
+		}
+		System.out.print(front.data + " " + "is the winner");
+		
+	}
+	
+	private static void printGraveYard() {
+		try {
+		ListNode current=graveYard;
+		ListNode front=graveYard;
+
+		while(current!=null) {
+				System.out.println(current.data);
+				current=current.next;	
+		}
+		}catch(Exception e) {
+			System.out.print("currently null");
+		}
+		
+		
+	}
+
+	private static void printCurrent() {
+		ListNode front=list;
+		ListNode current=list;
+		if(front!=null) {
+			do{
+				System.out.println(current.data);
+				current=current.next;
+			} while(current!=front);
+		}
+		else {
+			System.out.print("winner declared");
+		}
+		
+	}
+
+	private static void addGraveYard(String name) {
+		if(graveYard==null) {
+        	graveYard=new ListNode(name);
+        }
+        else {
+        	ListNode current=graveYard;
+        	//System.out.print(current.name);     
+        	while(current.next!=null) {
+        		current=current.next;
+        	}
+        	current=new ListNode(name);
+        	graveYard=new ListNode(current.data,graveYard);	  	
+        }   
+		
+	}
+
+	public static int nodeSize(ListNode list) {
+		int count=0;
+		ListNode current=list;
+		ListNode front=list;
+		if(front!=null) {
+			do{
+				count++;
+				current=current.next;
+			} while(current!=front);
+		}
+		return count;
+		
+	}
+	public static void print(ListNode current) {
+		
+		//ListNode current=list;
+		ListNode front=list;
+		if(front!=null) {
+			do{
+				System.out.print(current.data);
+				current=current.next;
+			} while(current!=front);
+		}
+	
+		
+	}
